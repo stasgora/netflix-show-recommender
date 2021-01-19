@@ -14,7 +14,7 @@ recommendations = {}
 
 for idx, row in dataset.iterrows():
 	similar_indices = cosine_similarities[idx].argsort()[:-100:-1]
-	similar_items = [(cosine_similarities[idx][i], dataset['show_id'][i]) for i in similar_indices]
+	similar_items = [(cosine_similarities[idx][i], i) for i in similar_indices]
 
 	recommendations[row['show_id']] = similar_items[1:]
 

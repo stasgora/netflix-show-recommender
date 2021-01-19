@@ -1,7 +1,7 @@
 import csv
 import pickle
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
@@ -14,13 +14,18 @@ with open('netflix_titles.csv') as f:
 	dataset = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
 
 
-def item(id):
-	return dataset.loc[dataset['show_id'] == id]['description'].tolist()[0].split(' - ')[0]
-
-
 @app.route("/")
-def hello():
-	return render_template('index.html', shows=dataset)
+def main_page():
+	results = dataset
+	for_id = request.args.get('for')
+	if for_id is not None:
+		results = list(map(lambda t: dataset[t[1]], recommendations[for_id][:6]))
+
+	query = request.args.get('query')
+	if query is not None and query:
+		results = list(filter(lambda x: x['title'].lower().find(query.lower()) >= 0, results))
+	return render_template('index.html', shows=results, query=query)
+
 
 if __name__ == "__main__":
 	app.run()

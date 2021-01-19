@@ -19,13 +19,13 @@
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home
+						<a class="nav-link" href="/">Home
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
 				</ul>
-				<form class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2" type="text" placeholder="Search">
+				<form class="form-inline my-2 my-lg-0" method="GET">
+					<input class="form-control mr-sm-2" type="text" name="query" placeholder="Search" value="{{query}}">
 					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 				</form>
 			</div>
@@ -40,7 +40,7 @@
 									<h5 class="card-title">{{show['title']}}</h5>
 									<h6 class="card-subtitle mb-2 text-muted">{{show['type']}} - {{show['release_year']}}</h6>
 									<p class="card-text">{{show['description']}}</p>
-									<a href="?show={{show['show_id']}}" class="card-link">Find similar</a>
+									<a href="?for={{show['show_id']}}" class="card-link">Find similar</a>
 								</div>
 							</div>
 						</div>
