@@ -10,7 +10,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-lg">
 			<a class="navbar-brand" href="#"><span class="text-danger font-weight-bold">NETFLIX</span> Show Recommender</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -18,15 +18,20 @@
 
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active">
+					<li class="nav-item {% if not title %}active{% endif %}">
 						<a class="nav-link" href="/">Home
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
+					{% if title %}
+					<li class="nav-item active">
+						<a class="nav-link" href="#">{{title}}</a>
+					</li>
+					{% endif %}
 				</ul>
 				<form class="form-inline my-2 my-lg-0" method="GET">
 					<input class="form-control mr-sm-2" type="text" name="query" placeholder="Search" value="{{query}}">
-					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+					<button type="button" class="btn btn-danger" type="submit">Search</button>
 				</form>
 			</div>
 		</nav>
@@ -40,7 +45,11 @@
 									<h5 class="card-title">{{show['title']}}</h5>
 									<h6 class="card-subtitle mb-2 text-muted">{{show['type']}} - {{show['release_year']}}</h6>
 									<p class="card-text">{{show['description']}}</p>
-									<a href="?for={{show['show_id']}}" class="card-link">Find similar</a>
+									{% if not title %}
+										<a href="?for={{show['show_id']}}">
+											<button type="button" class="btn btn-link text-danger">Find similar</button>
+										</a>
+									{% endif %}
 								</div>
 							</div>
 						</div>
